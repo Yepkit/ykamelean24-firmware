@@ -1,0 +1,10 @@
+dist/
+build/
+*.swp
+*.bkp
+tags
+*.pdf
+ykamelean24_doxygen_conf
+nbproject/private/
+
+
