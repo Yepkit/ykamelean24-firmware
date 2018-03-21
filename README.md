@@ -11,12 +11,12 @@ Description
 Microcontrollers (MCU) are an integrating piece of many electronic systems providing the ability to implement complex control systems and interface with a wide range of peripherals.
 They provide a high flexibility, cost efficiency and footprint savings.
 
-Nonetheless starting the development of a MCU based system from ``green field'' may be a daunting task due to the learning curve associated with programming it.
-This is the main reason why the ``accelerated'' development MCU boards and tools proliferate nowadays, boards like arduino and the tools associated with it brought the power of MCU environments to the general public and leveraged the development of new an exiting DIY projects and systems.
+Nonetheless starting the development of a MCU based system from "green field" may be a daunting task due to the learning curve associated with programming it.
+This is the main reason why the "accelerated" development MCU boards and tools proliferate nowadays, boards like arduino and the tools associated with it brought the power of MCU environments to the general public and leveraged the development of new an exiting DIY projects and systems.
 
 
-We use extensively MCU development boards on our development process, testing development hypothesis and for implementing ``one-shot'' projects/systems.
-With time the features we looked for become more apparent and the high level design for our ``ideal'' development MCU board was born.
+We use extensively MCU development boards on our development process, testing development hypothesis and for implementing "one-shot" projects/systems.
+With time the features we looked for become more apparent and the high level design for our "ideal" development MCU board was born.
 
 The main features we wanted in a MCU development board were:
 - Out of the box functionality that allowed us to plug and play with it.
@@ -38,7 +38,7 @@ A USB bootloader is used to enable direct loading of the firmware to the board t
 To load the firmware through USB we provide a PC software application available for download at the [product pag](https://www.yepkit.com/product/300105/YKAMELEAN24).
 
 
-While having a way to quickly implement ``something'' is useful we also wanted to do it with a production level orientation where code efficiency, minimize rework, ability to use all of the MCU features, to incorporate native Manufacturer libraries and tools is important.
+While having a way to quickly implement "something" is useful we also wanted to do it with a production level orientation where code efficiency, minimize rework, ability to use all of the MCU features, to incorporate native Manufacturer libraries and tools is important.
 By using the native C programming language, libraries and compilers we ensure uncompromising development from inception to production.
 
 
