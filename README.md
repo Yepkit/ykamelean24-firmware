@@ -35,7 +35,7 @@ It will take care of initialization the basic configuration of the YKAMELEAN24 b
 
 
 A USB bootloader is used to enable direct loading of the firmware to the board through USB, this way a specific hardware programmer is not required facilitating the development process.
-To load the firmware through USB we provide a PC software application available for download at the [product pag](https://www.yepkit.com/product/300105/YKAMELEAN24).
+To load the firmware through USB we provide a PC software application available for download at the [product page](https://www.yepkit.com/product/300105/YKAMELEAN24).
 
 
 While having a way to quickly implement "something" is useful we also wanted to do it with a production level orientation where code efficiency, minimize rework, ability to use all of the MCU features, to incorporate native Manufacturer libraries and tools is important.
