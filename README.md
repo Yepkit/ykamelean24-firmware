@@ -43,8 +43,9 @@ By using the native C programming language, libraries and compilers we ensure un
 
 
 
-Add-on boards/modules supported
-===============================
+Yepkit Add-on boards/modules supported
+======================================
+- YKEMB
 - YKUR
 - YKHaT
 - TS100
