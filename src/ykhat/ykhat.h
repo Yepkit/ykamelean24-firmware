@@ -1,105 +1,62 @@
-#ifndef _YKHAT_H_
-#define _YKHAT_H_
+/** \file ykhat.h */
+/*
+Copyright 2018 Yepkit Lda (www.yepkit.com)
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
+    http://www.apache.org/licenses/LICENSE-2.0
 
-/*************************************************************************
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+#ifndef DEFINED_YKHAT_H
+#define DEFINED_YKHAT_H
+
+/**
+ * Get temperature in Celsius unit.
  *
- *                      DEFINES
- *
- *************************************************************************/
-
-
-
-
-
-/*************************************************************************
- *
- *                      PROTOTYPES
- *
- *************************************************************************/
-
-/*************************************************************************
- * Function: ykhat_get_tempC
- *
- * Inputs:
- *  
- *  addr        sensor device I2C address
- *
- * Outputs:
- *
- *  The function returns the temperature reading in ºC
- *
- ************************************************************************/
+ * @param addr YKHaT board I2C slave device address lsb
+ * (lest significant bit). The YKHaT supports selection of one of two
+ * I2C 7bit addresses. The diference between these two addresses is just these
+ * lsb (0 or 1). Because of this we just need to pass to this function the 0 
+ * or 1 value.
+ * 
+ * @return integer value with the temperature in Celsius.
+ * 
+ */
 int ykhat_get_tempC(char addr);
 
-
-/*************************************************************************
- * Function: ykhat_get_temp
+/**
+ * Get temperature in Fahrenheit unit.
  *
- * Inputs:
- *  
- *  addr        sensor device I2C address
- *
- * Outputs:
- *
- *  The function returns the temperature reading in ºF
- *
- ************************************************************************/
+ * @param addr YKHaT board I2C slave device address lsb
+ * (lest significant bit). The YKHaT supports selection of one of two
+ * I2C 7bit addresses. The diference between these two addresses is just these
+ * lsb (0 or 1). Because of this we just need to pass to this function the 0 
+ * or 1 value.
+ * 
+ * @return integer value with the temperature in Fahrenheit.
+ * 
+ */
 int ykhat_get_tempF(char addr);
 
-
-/*************************************************************************
- * Function: ykhat_get_hum
+/**
+ * Get humidity level in %RH unit.
  *
- * Inputs:
- *  
- *  addr        sensor device I2C address
- *
- * Outputs:
- *
- *  The function returns the humidity reading in %RH
- *
- ************************************************************************/
+ * @param addr YKHaT board I2C slave device address lsb
+ * (lest significant bit). The YKHaT supports selection of one of two
+ * I2C 7bit addresses. The diference between these two addresses is just these
+ * lsb (0 or 1). Because of this we just need to pass to this function the 0 
+ * or 1 value.
+ * 
+ * @return integer value with the humidity level in %RH unit.
+ * 
+ */
 int ykhat_get_hum(char addr);
-
-
-
-
-//-----------------------------------------------------------------------
-//
-// PRIVATE FUNCTIONS
-//
-//-----------------------------------------------------------------------
-
-/*************************************************************************
- *  Function: ykhat_i2c_init
- *
- *  Description:
- *
- *      Ensures that all is properly configured and initialized
- *      for the I2C communication with YKHaT boards
- *
- *  Input:
- *
- *      brg                 Baudrate for I2C. 
- *
- *  Output:
- *
- *      0                   OK
- *
- *      1                   Error
- *
- *
- ************************************************************************/          
-unsigned char ykur_i2c_init(unsigned int brg);
-
-
-
-void ykhat_i2c_idle(void);
-
-void ykhat_start_sensor_reading(char addr);
-
-char ykhat_get_sensor_reading(char addr, char *buffer);
 
 #endif
