@@ -19,13 +19,37 @@
 #include "ts100.h"
 #include <math.h>
 
-static double calc_rt(double code);
+#define TS100_SDI     PORTBbits.RB4
+#define TS100_SCKOUT  LATBbits.LATB3
+#define TS100_CS      PORTAbits.RA0
 
-static double calc_temp(double rt);
 
 static char is_calibrated = 0;
 
 static double calibration_r_value = 202;	//default value
+
+/**
+ * Calculates RTD resistance based on the sensor reading 22 digital output.
+ * 
+ * @param code 		22 bit sensor reading. This value is the TS100 ADC output.
+ * 
+ * @return RTD resistance value in Ohm.
+ */
+static double calc_rt(double code);
+
+/**
+ * Calculates the temperature based on the RTD resistance using the formulas defined in DIN EN 60751.
+ * 
+ * @param rt	RTD resistance in Ohm.
+ * 
+ * @return Temperature in Celsius degrees (ºC).
+ */
+static double calc_temp(double rt);
+
+/**
+ * Fetches a reading from the TS100 board.
+ */
+unsigned long ts100_get_sensor_reading(void);
 
 
 /*!
@@ -123,8 +147,8 @@ static double calc_rt(double code)
 }
 
 
-//ToDo: eliminar os cáculos com as variáveis a e b e passar esta função para uma macro!
-static double calc_temp(double rt) {
+static double calc_temp(double rt) 
+{
 	double a = 0.0039083, b = 0.0000005775;
 	
 	return (sqrt(a*a - 4*b*(1 - (rt / 100))) - a) / (2*b);
