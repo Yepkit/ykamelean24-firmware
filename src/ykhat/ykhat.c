@@ -53,8 +53,6 @@ int ykhat_get_tempF(char addr)
 	//---------------------------------
 	st = buffer[0];
 	st = (st << 8) + buffer[1];
-	//st = st & 0xFF00;
-	//st = st + buffer[1];
 	temperature = ((315 * st) / 65535) - 49;	
 	return temperature;
 }
@@ -70,8 +68,8 @@ int ykhat_get_hum(char addr)
 	//---------------------------------
 	//Convert to ºC unit
 	//---------------------------------
-	srh = buffer[0];
-	srh = (srh << 8) + buffer[1];
+	srh = buffer[3];
+	srh = (srh << 8) + buffer[4];
 	humidity = (100 * srh) / 65535;
 	return humidity;
 }
