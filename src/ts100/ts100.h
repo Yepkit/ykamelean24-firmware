@@ -1,4 +1,4 @@
-/* \file */
+/** \file ts100.h */
 /* 
  * Copyright 2018 Yepkit Lda (www.yepkit.com)
  * 
@@ -16,27 +16,25 @@
  */
 
 
-#ifndef TS100_H
-#define TS100_H
+#ifndef DEFINED_TS100_H
+#define DEFINED_TS100_H
 
 #include <xc.h>
 
-#define TS100_SDI     PORTBbits.RB4
-#define TS100_SCKOUT  LATBbits.LATB3
-#define TS100_CS      PORTAbits.RA0
 
-
-/*!
- * SPI configuration and initialization for use with TS100 board.
+/**
+ * MCU SPI configuration and initialization for use with TS100 board.
  */
 void ts100_spi_enable(void);
+
 
 /*!
  * Fetches a reading from the TS100 board.
  */
 unsigned long ts100_get_sensor_raw_reading(void);
 
-/*!
+
+/**
  * Get temperature value in Celsius.
  */
 double ts100_get_temperature(void);
