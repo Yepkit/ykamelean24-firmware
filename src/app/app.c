@@ -173,66 +173,58 @@ char app_ts100()
  */
 char app_ykhat(unsigned char *ReceivedDataBuffer, unsigned char *ToSendDataBuffer) 
 {
-    int tempC, tempF, hum;
     
-    unsigned char valMSB=0, valLSB=0;
+	int tempC, tempF, hum;
+    
+	unsigned char valMSB=0, valLSB=0;
 
 
-    switch(ReceivedDataBuffer[2]) {
+	switch(ReceivedDataBuffer[2]) {
+	case 0x01: //Get temperature in ºC
+		tempC = ykhat_get_tempC(ReceivedDataBuffer[3]);
+		valMSB = (tempC >> 8) & 0x00FF;
+		valLSB = tempC & 0x00FF;
+		ToSendDataBuffer[0] = 0x12;
+		ToSendDataBuffer[1] = 0x02;
+		ToSendDataBuffer[2] = ReceivedDataBuffer[2];
+		ToSendDataBuffer[3] = ReceivedDataBuffer[3];
+		ToSendDataBuffer[4] = valMSB;
+		ToSendDataBuffer[5] = valLSB;
+		break;
+	case 0x02: //Get temperature in ºF
+		tempF = ykhat_get_tempF(ReceivedDataBuffer[3]);
+		valMSB = (tempF >> 8) & 0x00FF;
+		valLSB = tempF & 0x00FF;
+		ToSendDataBuffer[0] = 0x12;
+		ToSendDataBuffer[1] = 0x02;
+		ToSendDataBuffer[2] = ReceivedDataBuffer[2];
+		ToSendDataBuffer[3] = ReceivedDataBuffer[3];
+		ToSendDataBuffer[4] = valMSB;
+		ToSendDataBuffer[5] = valLSB;
+		break;
+	case 0x03: //Get humidity in %RH
+		hum = ykhat_get_hum(ReceivedDataBuffer[3]);
+		valMSB = (hum >> 8) & 0x00FF;
+		valLSB = hum & 0x00FF;
+		ToSendDataBuffer[0] = 0x12;
+		ToSendDataBuffer[1] = 0x02;
+		ToSendDataBuffer[2] = ReceivedDataBuffer[2];
+		ToSendDataBuffer[3] = ReceivedDataBuffer[3];
+		ToSendDataBuffer[4] = valMSB;
+		ToSendDataBuffer[5] = valLSB;
+		break;
+	case 0x11:  //Start sensor reading
+		ykhat_start_sensor_reading(ReceivedDataBuffer[3]);
+		ToSendDataBuffer[0] = 0x12;
+		ToSendDataBuffer[1] = 0x02;
+		ToSendDataBuffer[2] = ReceivedDataBuffer[2];
+		ToSendDataBuffer[3] = ReceivedDataBuffer[3];
+		break;
+	default:
+		break;
+	}
 
-        case 0x01: //Get temperature in ºC
-            tempC = ykhat_get_tempC(ReceivedDataBuffer[3]);
-            valMSB = (tempC >> 8) & 0x00FF;
-            valLSB = tempC & 0x00FF;
-            ToSendDataBuffer[0] = 0x12;
-            ToSendDataBuffer[1] = 0x02;
-            ToSendDataBuffer[2] = ReceivedDataBuffer[2];
-            ToSendDataBuffer[3] = ReceivedDataBuffer[3];
-            ToSendDataBuffer[4] = valMSB;
-            ToSendDataBuffer[5] = valLSB;
-
-            break;
-
-        case 0x02: //Get temperature in ÂºF
-            tempF = ykhat_get_tempF(ReceivedDataBuffer[3]);
-            valMSB = (tempF >> 8) & 0x00FF;
-            valLSB = tempF & 0x00FF;
-            ToSendDataBuffer[0] = 0x12;
-            ToSendDataBuffer[1] = 0x02;
-            ToSendDataBuffer[2] = ReceivedDataBuffer[2];
-            ToSendDataBuffer[3] = ReceivedDataBuffer[3];
-            ToSendDataBuffer[4] = valMSB;
-            ToSendDataBuffer[5] = valLSB;
-
-            break;
-
-        case 0x03: //Get humidity in %RH
-            hum = ykhat_get_hum(ReceivedDataBuffer[3]);
-            valMSB = (hum >> 8) & 0x00FF;
-            valLSB = hum & 0x00FF;
-            ToSendDataBuffer[0] = 0x12;
-            ToSendDataBuffer[1] = 0x02;
-            ToSendDataBuffer[2] = ReceivedDataBuffer[2];
-            ToSendDataBuffer[3] = ReceivedDataBuffer[3];
-            ToSendDataBuffer[4] = valMSB;
-            ToSendDataBuffer[5] = valLSB;
-
-            break;
-
-        case 0x11:  //Start sensor reading
-            ykhat_start_sensor_reading(ReceivedDataBuffer[3]);
-            ToSendDataBuffer[0] = 0x12;
-            ToSendDataBuffer[1] = 0x02;
-            ToSendDataBuffer[2] = ReceivedDataBuffer[2];
-            ToSendDataBuffer[3] = ReceivedDataBuffer[3];
-
-            break;
-
-        default:
-            break;
-    }
-
-    return 0;
+	return 0;
 }
 
 

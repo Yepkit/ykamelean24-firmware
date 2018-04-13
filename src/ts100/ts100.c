@@ -23,9 +23,9 @@ static double calc_rt(double code);
 
 static double calc_temp(double rt);
 
-static char is_calibrated = 0;
-
-static double calibration_r_value = 202;	//default value
+static double RA = 6800;			//default value.
+						//ts100_calibrate should be run
+						//to calibrate this value.
 
 
 /*!
@@ -73,7 +73,7 @@ void ts100_spi_enable(void)
 	SPI1CON1Lbits.SPIEN = 1;	//Enable SPI operation
 }
 
-unsigned long ts100_get_sensor_reading(void)
+unsigned long ts100_get_sensor_raw_reading(void)
 {
 	unsigned long received_val = 0;
 	
@@ -100,36 +100,47 @@ double ts100_get_temperature(void)
 	double rt;
 	unsigned long reading = 0;
 
-	reading = ts100_get_sensor_reading();	//Get sensor reading
-	if (is_calibrated)
-		rt = calc_rt((double) reading);	//Calculate RTD resistance
-	else
-		rt = calc_rt((double) reading);
+	reading = ts100_get_sensor_raw_reading();	//Get sensor reading
+	rt = calc_rt((double) reading);	//Calculate RTD resistance
 	return calc_temp(rt);
 }
 
 
 static double calc_rt(double code)
 {
-	double rt, raf, np = 1;
-	int i;
-	
-	raf = 680000 / calibration_r_value; 	//Apply calibration ajustment
-  	for (i = 0; i < 21; i++)
-		np = np * 2;			//Calculate 2^(n-1)
-	rt = raf * (code / (np - code));	//Calculate Rt
-	
+	double rt;
+
+	rt = RA * (code / (2097152 - code));	//Calculate Rt
 	return rt;
 }
 
 
-//ToDo: eliminar os cáculos com as variáveis a e b e passar esta função para uma macro!
-static double calc_temp(double rt) {
+static double calc_temp(double rt) 
+{
 	double a = 0.0039083, b = 0.0000005775;
 	
 	return (sqrt(a*a - 4*b*(1 - (rt / 100))) - a) / (2*b);
 }
 
 
+void calibrate_sensor(void)
+{
+	unsigned long reading = 0;
+
+	reading = ts100_get_sensor_raw_reading();
+	
+	RA = 100 / (reading / (2097152 - reading));
+}
 
 
+
+double get_calibration_val(void)
+{
+	return RA;
+}
+
+
+void set_calibration_val(double value)
+{
+	RA = value;
+}

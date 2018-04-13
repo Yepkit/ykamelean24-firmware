@@ -34,17 +34,47 @@ void ts100_spi_enable(void);
 /*!
  * Fetches a reading from the TS100 board.
  */
-unsigned long ts100_get_sensor_reading(void);
+unsigned long ts100_get_sensor_raw_reading(void);
 
 /*!
  * Get temperature value in Celsius.
  */
 double ts100_get_temperature(void);
 
+
+/*!
+ * Performs sensor calibration.
+ * 
+ * Pre-requisites:
+ *	On-board jumper should be set to "CAL" position. 
+ *  
+ */
+void calibrate_sensor(void);
+
+
 /*!
  * Get calibration value.
+ * 
+ * Returns the calibration value which was set by a previous calibration routine
+ * (call of calibrate_sensor() function).
+ * 
  */
 double get_calibration_val(void);
+
+
+/*!
+ * Sets calibration value.
+ * 
+ * Sets the internal variable which contains the calibration value.
+ * This function should be used to bypass the calibrate_sensor() routine,
+ * for example when a previous calibration value was stored in a persistent
+ * memory and should be reused.
+ * 
+ */
+void set_calibration_val(double value);
+
+
+
 
 #endif
 
